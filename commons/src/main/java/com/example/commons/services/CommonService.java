@@ -7,7 +7,7 @@ public interface CommonService<RQ, RS> {
 	
 	List<RS> listar();
 
-	Optional<RS> obtnerPorID(Long id);
+	Optional<RS> obtenerPorID(Long id);
 
 	RS insertar(RQ request);
 
