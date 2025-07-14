@@ -7,6 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PRODUCTOS")
@@ -19,15 +23,21 @@ public class Producto {
 	private Long id;
 	
 	@Column(name = "NOMBRE")
+	@NotBlank(message = "El nombre del producto es requerido.")
 	private String nombre;
 	
 	@Column(name = "DESCRIPCION")
+	@NotBlank(message = "La descripcion del producto es requerido.")
 	private String descripcion;
 	
 	@Column(name = "PRECIO")
+	@NotNull(message = "El precio del producto es requerido.")
+	@DecimalMin("0.01")
 	private float precio;
 	
-	@Column(name= "STOCK")
+	@Column(name = "STOCK")
+	@NotNull(message = "El stock del producto es requerido.")
+	@Min(1)
 	private int stock;
 
 	public Producto() {
