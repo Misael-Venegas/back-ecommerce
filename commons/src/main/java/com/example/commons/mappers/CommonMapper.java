@@ -1,5 +1,9 @@
 package com.example.commons.mappers;
 
-public class CommonMapper {
+public abstract class CommonMapper <RQ, RS, E>{
+
+	protected abstract RS entityToResponse(E entity);
+	
+	protected abstract E requestToEntity(RQ request);
 
 }
