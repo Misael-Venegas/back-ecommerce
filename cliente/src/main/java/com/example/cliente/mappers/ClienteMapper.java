@@ -10,10 +10,6 @@ import com.example.commons.mappers.CommonMapper;
 @Component
 public class ClienteMapper extends CommonMapper<ClienteRequest, ClienteResponse, Cliente>{
 
-	
-	//public ClienteMapper() {
-		
-	//}
 
 	@Override
 	public ClienteResponse entityToResponse(Cliente entity) {

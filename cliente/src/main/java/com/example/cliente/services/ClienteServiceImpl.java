@@ -8,11 +8,13 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.cliente.clients.PedidoClient;
 import com.example.cliente.mappers.ClienteMapper;
 import com.example.cliente.repositories.ClienteRepository;
 import com.example.commons.dto.ClienteRequest;
 import com.example.commons.dto.ClienteResponse;
 import com.example.commons.entities.Cliente;
+import com.example.commons.exceptions.EntidadRelacionadaException;
 
 @Service
 public class ClienteServiceImpl implements ClienteService{
@@ -20,11 +22,17 @@ public class ClienteServiceImpl implements ClienteService{
 	private ClienteRepository clienteRepository;
 	
 	private ClienteMapper clienteMapper;
+	
+	private PedidoClient pedidoClient;
 
-	public ClienteServiceImpl(ClienteRepository clienteRepository, ClienteMapper clienteMapper) {
+	
+
+	public ClienteServiceImpl(ClienteRepository clienteRepository, ClienteMapper clienteMapper,
+			PedidoClient pedidoClient) {
 		super();
 		this.clienteRepository = clienteRepository;
 		this.clienteMapper = clienteMapper;
+		this.pedidoClient = pedidoClient;
 	}
 
 	@Override
@@ -70,10 +78,15 @@ public class ClienteServiceImpl implements ClienteService{
 	public ClienteResponse eliminar(Long id) {
 		
 		Cliente cliente = clienteRepository.findById(id).orElseThrow(NoSuchElementException:: new);
-		//Se debe de verificar si el cliente está siendo usado en otro lugar antes de eliminar.
 		
-		clienteRepository.deleteById(id);
-		return clienteMapper.entityToResponse(cliente);
+		boolean enUso = pedidoClient.clienteIsPresent(id);
+		
+		if (enUso) {
+			throw new EntidadRelacionadaException("No se pudo eliminar el CLIENTE ya que está asociado a un PEDIDO");
+		} else {
+			clienteRepository.deleteById(id);
+			return clienteMapper.entityToResponse(cliente);
+		}
 		
 	}
 	
