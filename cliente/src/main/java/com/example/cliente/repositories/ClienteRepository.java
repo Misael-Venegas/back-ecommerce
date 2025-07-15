@@ -9,6 +9,6 @@ import com.example.commons.entities.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	
-	//QUERY SI ES USADO EN ALGUN LADO
+	//QUERY SI USARA ALGO DE OTRO LADO
 
 }

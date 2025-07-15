@@ -1,19 +1,22 @@
 package com.example.cliente.mappers;
 
+import org.springframework.stereotype.Component;
+
 import com.example.commons.dto.ClienteRequest;
 import com.example.commons.dto.ClienteResponse;
 import com.example.commons.entities.Cliente;
 import com.example.commons.mappers.CommonMapper;
 
+@Component
 public class ClienteMapper extends CommonMapper<ClienteRequest, ClienteResponse, Cliente>{
 
 	
-	public ClienteMapper() {
+	//public ClienteMapper() {
 		
-	}
+	//}
 
 	@Override
-	protected ClienteResponse entityToResponse(Cliente entity) {
+	public ClienteResponse entityToResponse(Cliente entity) {
 		if (entity == null) {
 			return null;
 		}
@@ -25,9 +28,21 @@ public class ClienteMapper extends CommonMapper<ClienteRequest, ClienteResponse,
 	}
 
 	@Override
-	protected Cliente requestToEntity(ClienteRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente requestToEntity(ClienteRequest request) {
+		if (request == null) {
+			return null;
+		}
+		
+		Cliente cliente = new Cliente();
+		
+		cliente.setNombre(request.nombre());
+		cliente.setApellido(request.apellido());
+		cliente.setEmail(request.email());
+		cliente.setTelefono(request.telefono());
+		cliente.setDireccion(request.direccion());
+		
+		return cliente;
+		
 	}
 
 }

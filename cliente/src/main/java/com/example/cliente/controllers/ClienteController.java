@@ -15,6 +15,5 @@ public class ClienteController extends CommonController<ClienteRequest, ClienteR
 		super(service);
 	}
 	
-	
 
 }
