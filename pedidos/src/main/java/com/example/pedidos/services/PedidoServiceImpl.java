@@ -76,5 +76,12 @@ public class PedidoServiceImpl implements PedidoService {
 		repository.deleteById(id);
 		return mapper.entityToResponse(pedido);
 	}
+	
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean existeProducto(Long id) {
+		return repository.existeProductoId(id);
+	}
 
 }

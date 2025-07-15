@@ -11,6 +11,8 @@ import java.util.Optional;
 import com.example.commons.dto.ProductosRequest;
 import com.example.commons.dto.ProductosResponse;
 import com.example.commons.entities.Producto;
+import com.example.commons.exceptions.EntidadRelacionadaException;
+import com.example.productos.clients.PedidoCliente;
 import com.example.productos.mappers.ProductoMapper;
 import com.example.productos.repositories.ProductoRepository;
 
@@ -19,10 +21,13 @@ public class ProductoServiceImpl implements ProductoService{
 
 	private ProductoRepository repository;
 	
+	private PedidoCliente pCliente;
+	
 	private ProductoMapper mapper;
 	
-	public ProductoServiceImpl(ProductoRepository repository, ProductoMapper mapper) {
+	public ProductoServiceImpl(ProductoRepository repository, PedidoCliente pCliente, ProductoMapper mapper) {
 		this.repository = repository;
+		this.pCliente = pCliente;
 		this.mapper = mapper;
 	}
 
@@ -64,8 +69,16 @@ public class ProductoServiceImpl implements ProductoService{
 	@Transactional
 	public ProductosResponse eliminar(Long id) {
 		Producto producto = repository.findById(id).orElseThrow(NoSuchElementException::new);
-		repository.deleteById(id);
-		return mapper.entityToResponse(producto);
+		
+		boolean enUso = pCliente.productoIsPresent(id);
+		if(enUso) {
+			throw new EntidadRelacionadaException("No se puede eliminar el producto por que esta en un producto relacionado.");
+		}
+		else {
+			repository.deleteById(id);
+			return mapper.entityToResponse(producto);
+		}
+		
 	}
 	
 }

@@ -9,4 +9,6 @@ import com.example.commons.services.CommonService;
 @Service
 public interface PedidoService extends CommonService<PedidosRequest, PedidosResponse>{
 
+	boolean existeProducto(Long id);
+	
 }

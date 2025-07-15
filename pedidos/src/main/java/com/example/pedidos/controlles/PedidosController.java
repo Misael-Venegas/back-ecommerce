@@ -1,5 +1,8 @@
 package com.example.pedidos.controlles;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.commons.controllers.CommonController;
@@ -12,7 +15,12 @@ public class PedidosController extends CommonController<PedidosRequest, PedidosR
 
 	public PedidosController(PedidoService service) {
 		super(service);
-		// TODO Auto-generated constructor stub
+	}
+	
+	@GetMapping("/id-producto/{id}")
+	public ResponseEntity<Boolean> productoIsPresent(@PathVariable Long id) {
+		boolean isPresent = service.existeProducto(id);
+		return ResponseEntity.ok(isPresent);
 	}
 
 }
