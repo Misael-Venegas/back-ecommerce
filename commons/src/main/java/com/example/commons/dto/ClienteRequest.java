@@ -1,6 +1,8 @@
 package com.example.commons.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,7 +19,8 @@ public record ClienteRequest(
 		String email,
 		
 		@NotNull(message = "El numero de telefono es requerido.")
-		@Size(min = 10, max = 10, message = "El numero de telefono debe de tener 10 digitos")
+		@Min(value = 1000000000L, message = "El numero de telefono debe de tener 10 digitos")
+		@Max(value = 9999999999L, message = "El numero de telefono debe de tener 10 digitos")
 		Long telefono,
 		
 		@Size(max = 100, message = "La direccion no puede exceder los 100 caracteres.")

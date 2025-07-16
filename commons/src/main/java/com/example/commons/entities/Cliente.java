@@ -34,6 +34,10 @@ public class Cliente {
 	private String direccion;
 	
 	
+	public Cliente() {
+		
+	}
+
 	public Cliente(Long id_cliente, String nombre, String apellido, String email, Long telefono, String direccion) {
 		this.id_cliente = id_cliente;
 		this.nombre = nombre;
