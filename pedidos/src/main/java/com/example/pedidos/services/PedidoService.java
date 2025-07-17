@@ -11,4 +11,6 @@ public interface PedidoService extends CommonService<PedidosRequest, PedidosResp
 
 	boolean existeProducto(Long id);
 	
+	boolean existeCliente(Long id);
+	
 }
