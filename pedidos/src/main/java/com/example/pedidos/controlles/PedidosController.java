@@ -22,5 +22,11 @@ public class PedidosController extends CommonController<PedidosRequest, PedidosR
 		boolean isPresent = service.existeProducto(id);
 		return ResponseEntity.ok(isPresent);
 	}
+	
+	@GetMapping("/id-cliente/{id}")
+	public ResponseEntity<Boolean> clienteIsPresent(@PathVariable Long id) {
+		boolean isPresent = service.existeCliente(id);
+		return ResponseEntity.ok(isPresent);
+	}
 
 }

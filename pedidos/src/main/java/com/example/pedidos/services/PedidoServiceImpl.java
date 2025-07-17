@@ -84,4 +84,10 @@ public class PedidoServiceImpl implements PedidoService {
 		return repository.existeProductoId(id);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public boolean existeCliente(Long id) {
+		return repository.existeClienteId(id);
+	}
+
 }
