@@ -15,7 +15,8 @@ public record ClienteRequest(
 		@NotBlank(message = "El apellido es requerido.")
 		String apellido,
 		
-		@Email
+		@NotBlank(message = "El email es requerido.")
+		@Email(message = "El correo no cumple con el formato.")
 		String email,
 		
 		@NotNull(message = "El numero de telefono es requerido.")
