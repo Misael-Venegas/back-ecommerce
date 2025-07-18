@@ -35,7 +35,7 @@ public class PedidoServiceImpl implements PedidoService {
 	public List<PedidosResponse> listar() {
 
 		List<PedidosResponse> pedidos = new ArrayList<>();
-		repository.findAll().forEach(pedido -> {
+		repository.obtenerListaPedidos().forEach(pedido -> {
 			pedidos.add(mapper.entityToResponse(pedido));
 		});
 		return pedidos;
@@ -73,11 +73,13 @@ public class PedidoServiceImpl implements PedidoService {
 	public PedidosResponse eliminar(Long id) {
 
 		Pedidos pedido = repository.findById(id).orElseThrow(NoSuchElementException::new);
+		PedidosResponse response = mapper.entityToResponse(pedido);
+
 		repository.deleteById(id);
-		return mapper.entityToResponse(pedido);
+
+		return response;
 	}
-	
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public boolean existeProducto(Long id) {
